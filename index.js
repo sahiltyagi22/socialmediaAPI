@@ -6,6 +6,7 @@ const morgan = require('morgan')
 const dotenv = require('dotenv')
 const userRoute = require('./routes/users')
 const authRoute = require('./routes/auth')
+const bodyParser = require('body-parser')
 
 dotenv.config()
 
@@ -16,6 +17,9 @@ mongoose.connect(process.env.mongo_URL, {useNewUrlParser : true , useUnifiedTopo
 })
 
 
+app.use(express.urlencoded({extended:true}))
+app.use(express.json())
+
 app.use(express.json())
 app.use(helmet())
 app.use(morgan('common'))
@@ -25,6 +29,10 @@ app.use('/api/auth', authRoute)
 
 app.get('/', (req,res)=>{
     res.send("hello there")
+})
+
+app.post('/',( req,res)=>{
+  res.send("hello there")
 })
 
 app.get('/users', (req,res)=>{
