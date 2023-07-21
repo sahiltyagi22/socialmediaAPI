@@ -16,7 +16,6 @@ mongoose.connect(process.env.mongo_URL, {useNewUrlParser : true , useUnifiedTopo
     console.log(err);
 })
 
-
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
 
