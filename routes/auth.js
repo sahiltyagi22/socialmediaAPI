@@ -6,8 +6,9 @@ const saltRounds = 10;
 var bodyParser = require('body-parser');
 
 const app = express();
-app.use(express.json());
-app.use(bodyParser.urlencoded({extended: true}))
+
+router.use(bodyParser.urlencoded({extended :true}))
+router.use(bodyParser.json())
 
 router.post("/register", async (req, res) => {
   try {
@@ -21,11 +22,22 @@ router.post("/register", async (req, res) => {
       });
       // saving info
       await newUser.save();
-      res.send("all okay");
+      res.sendStatus(200).json(newUser);
     });
   } catch (error) {
     console.log(error);
   }
 });
+
+
+// LOGIN route
+router.post("/login" , async (req,res)=>{
+try {
+  const user = await Users.findOne({email : req.body.email})
+!user && res.status(404).json("user not found")
+} catch (error) {
+  console.log(error);
+}
+})
 
 module.exports = router;
